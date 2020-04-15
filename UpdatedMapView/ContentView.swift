@@ -40,9 +40,10 @@ struct ContentView: View {
                     }.frame(width: 318, height: 50)
                         .background(Color(.red)).cornerRadius(20)
                 }
-            }.padding()
-        }
-    }
+            }.padding().navigationBarTitle(Text("")
+            .foregroundColor(.red),displayMode: .inline)
+
+        }    }
 }
 
 struct ContentView_Previews: PreviewProvider {

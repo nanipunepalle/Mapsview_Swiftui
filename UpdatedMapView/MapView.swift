@@ -18,8 +18,6 @@ struct MapView: UIViewRepresentable {
     @State private var sourceCoordinates: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     @State private var destinationCoordinates: CLLocationCoordinate2D = CLLocationCoordinate2D(latitude: 0, longitude: 0)
     @State private var intermediateCoordinates: CLLocationCoordinate2D?
-    @State private var noCities = 2
-    @State private var count = 0
     let myGroup = DispatchGroup()
     
     let sourceAnnotation = MKPointAnnotation()
@@ -37,21 +35,25 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: Context) {
+        var noCities = 2
+        var count = 0
+        if intermediateCity != ""{
+            noCities = 3
+        }
+        
         uiView.delegate = context.coordinator
         uiView.addAnnotations([sourceAnnotation,destinationAnnotation,intermediateAnnotation,movingAnnotaion])
         
         myGroup.enter()
-        if intermediateCity != ""{
-            self.noCities = 3
-        }
+        
         self.locationManager.getCoordinate(addressString: self.sourceCity) { (coordinate, error) in
             if error != nil {
                 print(error ?? "error")
             }
             else{
                 self.sourceCoordinates = coordinate
-                self.count += 1
-                self.check()
+                count += 1
+                self.check(count: count, noCities: noCities)
             }
             
         }
@@ -61,8 +63,8 @@ struct MapView: UIViewRepresentable {
             }
             else{
                 self.destinationCoordinates = coordinate
-                self.count += 1
-                self.check()
+                count += 1
+                self.check(count: count, noCities: noCities)
             }
         }
         
@@ -73,8 +75,8 @@ struct MapView: UIViewRepresentable {
                 }
                 else{
                     self.intermediateCoordinates = coordinate
-                    self.count += 1
-                    self.check()
+                    count += 1
+                    self.check(count: count, noCities: noCities)
                 }
             }
         }
@@ -86,12 +88,14 @@ struct MapView: UIViewRepresentable {
             if self.intermediateCoordinates != nil{
                 self.intermediateAnnotation.coordinate = self.intermediateCoordinates!
                 let routeLine1 = MKPolyline(coordinates: [self.sourceCoordinates,self.intermediateCoordinates!,self.destinationCoordinates], count: 3)
+                uiView.setRegion(MKCoordinateRegion(routeLine1.boundingMapRect), animated: true)
                 uiView.addOverlay(routeLine1)
                 uiView.setRegion(MKCoordinateRegion(routeLine1.boundingMapRect), animated: true)
                 self.animation1()
             }
             else if self.intermediateCoordinates == nil{
                 let routeLine1 = MKPolyline(coordinates: [self.sourceCoordinates,self.destinationCoordinates], count: 2)
+                uiView.setRegion(MKCoordinateRegion(routeLine1.boundingMapRect), animated: true)
                 uiView.addOverlay(routeLine1)
                 uiView.setRegion(MKCoordinateRegion(routeLine1.boundingMapRect), animated: true)
                 self.animation2()
@@ -171,7 +175,9 @@ extension MapView{
         }
     }
     
-    func check(){
+    func check(count: Int,noCities: Int){
+        print(count)
+        print(noCities)
         if count == noCities{
             myGroup.leave()
         }
