@@ -14,6 +14,8 @@
 		3D74C02C2445EC6D0080B701 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D74C02B2445EC6D0080B701 /* Assets.xcassets */; };
 		3D74C02F2445EC6D0080B701 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D74C02E2445EC6D0080B701 /* Preview Assets.xcassets */; };
 		3D74C0322445EC6D0080B701 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D74C0302445EC6D0080B701 /* LaunchScreen.storyboard */; };
+		3D74C03A2445EE8A0080B701 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D74C0392445EE8A0080B701 /* MapView.swift */; };
+		3D74C03C2445F49F0080B701 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D74C03B2445F49F0080B701 /* Location.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +28,8 @@
 		3D74C02E2445EC6D0080B701 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3D74C0312445EC6D0080B701 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		3D74C0332445EC6D0080B701 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D74C0392445EE8A0080B701 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		3D74C03B2445F49F0080B701 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +65,8 @@
 				3D74C0222445EC6A0080B701 /* AppDelegate.swift */,
 				3D74C0242445EC6A0080B701 /* SceneDelegate.swift */,
 				3D74C0292445EC6A0080B701 /* ContentView.swift */,
+				3D74C0392445EE8A0080B701 /* MapView.swift */,
+				3D74C03B2445F49F0080B701 /* Location.swift */,
 				3D74C02B2445EC6D0080B701 /* Assets.xcassets */,
 				3D74C0302445EC6D0080B701 /* LaunchScreen.storyboard */,
 				3D74C0332445EC6D0080B701 /* Info.plist */,
@@ -151,7 +157,9 @@
 			files = (
 				3D74C0282445EC6A0080B701 /* UpdatedMapView.xcdatamodeld in Sources */,
 				3D74C0232445EC6A0080B701 /* AppDelegate.swift in Sources */,
+				3D74C03A2445EE8A0080B701 /* MapView.swift in Sources */,
 				3D74C02A2445EC6A0080B701 /* ContentView.swift in Sources */,
+				3D74C03C2445F49F0080B701 /* Location.swift in Sources */,
 				3D74C0252445EC6A0080B701 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
