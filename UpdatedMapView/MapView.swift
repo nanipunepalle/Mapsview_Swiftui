@@ -119,8 +119,12 @@ class Coordinator: NSObject,MKMapViewDelegate{
     }
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "view")
-        annotationView.canShowCallout = true
-        annotationView.image = UIImage(systemName: "airplane")
+        annotationView.canShowCallout = false
+        let image = UIImage(named: "plane")
+        let sizedImage = image!.resizedImage(newSize: CGSize(width: 60, height: 60))
+        annotationView.image = sizedImage
+        let radians = 90 * Double.pi/180
+        annotationView.transform = CGAffineTransform(rotationAngle: CGFloat(radians))
         return annotationView
     }
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
@@ -134,9 +138,50 @@ class Coordinator: NSObject,MKMapViewDelegate{
 }
 
 
+extension UIImage{
+    func resizedImage(newSize: CGSize) -> UIImage {
+        // Guard newSize is different
+        guard self.size != newSize else { return self }
+        
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0.0);
+        self.draw(in: CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height))
+        let newImage: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        return newImage
+    }
+    
+    func rotate(degrees: CGFloat) -> UIImage {
+        let radians = degrees / (180.0 * CGFloat.pi)
+        let rotatedSize = CGRect(origin: .zero, size: size)
+            .applying(CGAffineTransform(rotationAngle: CGFloat(radians)))
+            .integral.size
+        UIGraphicsBeginImageContext(rotatedSize)
+        if let context = UIGraphicsGetCurrentContext() {
+            let origin = CGPoint(x: rotatedSize.width / 2.0,
+                                 y: rotatedSize.height / 2.0)
+            context.translateBy(x: origin.x, y: origin.y)
+            context.rotate(by: radians)
+            draw(in: CGRect(x: -origin.y, y: -origin.x,
+                            width: size.width, height: size.height))
+            let rotatedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+
+            return rotatedImage ?? self
+        }
+
+        return self
+    }
+}
+
 //Animations
 
 extension MapView{
+    
+//    func findSlope() -> Double{
+//        
+//        let slope = (destinationCoordinates.longitude - sourceCoordinates.longitude)/(destinationCoordinates.latitude - sourceCoordinates.la)
+//        return slope
+//    }
     
     func animation1(){
         UIView.animate(withDuration: 1,animations: {
