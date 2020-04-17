@@ -19,14 +19,11 @@ class LocationManager: NSObject{
             if error == nil {
                 if let placemark = placemarks?[0] {
                     let location = placemark.location!
-                        
                     completionHandler(location.coordinate, nil)
                     return
                 }
             }
-                
             completionHandler(kCLLocationCoordinate2DInvalid, error as NSError?)
         }
     }
-    
 }

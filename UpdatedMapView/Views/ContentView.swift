@@ -42,8 +42,11 @@ struct ContentView: View {
                 }
             }.padding().navigationBarTitle(Text("")
             .foregroundColor(.red),displayMode: .inline)
-
-        }    }
+            .onAppear {
+                self.selection = nil
+            }
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
